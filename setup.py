@@ -1,12 +1,16 @@
 import setuptools
 
 setuptools.setup(
-    name="template",
+    name="yatmos",
     packages=setuptools.find_packages(),
     version="0.1.0",
-    description="Python project template",
+    description="Yet Another Test Managment System",
     author="Pavel Oborin",
     author_email="oborin.p@gmail.com",
-    url="https://github.com/Oborichkin/python-template",
+    url="https://github.com/Oborichkin/yatmos",
     python_requires=">=3.6",
+    install_requires=[
+        "fastapi",
+        "uvicorn[standard]"
+    ]
 )

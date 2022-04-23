@@ -1,4 +1,4 @@
-PROJECT_NAME = template
+PROJECT_NAME = yatmos
 
 .PHONY = test build push clean hooks
 

@@ -1,7 +1,7 @@
 # -- Project information
 
-project = "template"
-copyright = "2021, PROTEI LLC"
+project = "YATMoS"
+copyright = "2022, Pavel Oborin"
 author = "Pavel Oborin"
 
 # -- General
