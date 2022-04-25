@@ -35,7 +35,7 @@ def project_helper(project) -> dict:
     return {
         "id": str(project["_id"]),
         "title": project["title"],
-        "desc": project["desc"]
+        "desc": project.get("desc")
     }
 
 
