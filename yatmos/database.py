@@ -1,17 +1,12 @@
-import os
-import asyncio
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
-import motor.motor_asyncio
+DATABASE_URL = "sqlite:///sqlite.db"
 
-MONGO_DETAILS = "mongodb://root:example@localhost:27017"
+# check_same_thread is for sqlite only
+engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 
-client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_DETAILS)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-env = os.environ.get("ENVIRONMENT", "development")
-
-if env == "testing":
-    client.get_io_loop = asyncio.get_running_loop
-
-db = client[f"yatmos_{env}"]
-
-projects = db.get_collection("projects")
+Base = declarative_base()

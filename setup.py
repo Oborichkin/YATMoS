@@ -12,7 +12,6 @@ setuptools.setup(
     install_requires=[
         "fastapi",
         "uvicorn[standard]",
-        "bson",
-        "motor"
-    ]
+        "sqlalchemy",
+    ],
 )

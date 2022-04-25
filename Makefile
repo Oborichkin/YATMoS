@@ -8,7 +8,7 @@ run: venv
 install: venv hooks
 
 test: venv
-	ENVIRONMENT=testing $(VENV)/pytest --cov=$(PROJECT_NAME) --asyncio-mode=strict --cov-report=html --cov-report=term tests/
+	ENVIRONMENT=testing $(VENV)/pytest --cov=$(PROJECT_NAME) --cov-report=html --cov-report=term tests/
 
 hooks: venv
 	$(VENV)/pre-commit install
