@@ -12,8 +12,14 @@ class TestSuiteCreate(TestSuiteBase):
     pass
 
 
+class TestSuiteUpdate(BaseModel):
+    title: Optional[str]
+    desc: Optional[str]
+
+
 class TestSuite(TestSuiteBase):
     id: int
+    parent_id: Optional[int]
     project_id: int
 
     class Config:
@@ -32,7 +38,7 @@ class ProjectCreate(ProjectBase):
     pass
 
 
-class UpdateProject(BaseModel):
+class ProjectUpdate(ProjectBase):
     title: Optional[str]
     desc: Optional[str]
 

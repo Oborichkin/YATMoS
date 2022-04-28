@@ -14,6 +14,8 @@ project_x = {"title": "Project X", "desc": "Secret project X"}
 project_y = {"title": "Project Y", "desc": "Secret project Y"}
 project_z = {"title": "Project Z", "desc": "Secret project Z"}
 
+test_suite_a = {"title": "Test Suite A", "desc": "Main test suite"}
+
 
 @pytest.fixture(scope="function", autouse=True)
 def empty_db():

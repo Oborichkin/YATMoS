@@ -18,8 +18,27 @@ def create_project(db: Session, project: schemas.ProjectCreate):
     return new_project
 
 
-def get_test_suites(db: Session, skip: int = 0, limit: int = 0):
-    return db.query(models.TestSuite).offset(skip).limit(limit).all()
+def delete_project(db: Session, project_id: int):
+    project = db.query(models.Project).filter(models.Project.id == project_id)
+    project.delete()
+    db.commit()
+
+
+def update_project(db: Session, project_id: int, project: schemas.ProjectUpdate):
+    upd_project = db.query(models.Project).filter(models.Project.id == project_id)
+    upd_project.update(project.dict(exclude_unset=True))
+    db.commit()
+    upd_project = upd_project.first()
+    db.refresh(upd_project)
+    return upd_project
+
+
+def get_test_suite(db: Session, suite_id: int):
+    return db.query(models.TestSuite).filter(models.TestSuite.id == suite_id).first()
+
+
+def get_test_suites(db: Session, project_id: int, skip: int = 0, limit: int = 0):
+    return db.query(models.TestSuite).filter(models.Project.id == project_id).offset(skip).limit(limit).all()
 
 
 def create_test_suite(db: Session, test_suite: schemas.TestSuiteCreate, project_id: int):
