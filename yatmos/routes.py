@@ -51,7 +51,7 @@ def create_test_suite(id: int, test_suite: schemas.TestSuiteCreate, db: Session 
 
 
 @app.get("/project/{id}/suites", response_model=List[schemas.TestSuite], response_description="Test suites retrieved")
-def get_project_suites(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def get_project_suites(id: int, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.get_test_suites(db, project_id=id, skip=skip, limit=limit)
 
 
@@ -61,3 +61,14 @@ def get_suite(id: int, db: Session = Depends(get_db)):
     if not suite:
         raise HTTPException(404, "Test suite not found")
     return suite
+
+
+@app.delete("/suite/{id}")
+def delete_suite(id: int, db: Session = Depends(get_db)):
+    suite = crud.delete_test_suite(db, suite_id=id)
+    return suite
+
+
+@app.patch("/suite/{id}")
+def update_suite(id: int, suite: schemas.TestSuiteUpdate, db: Session = Depends(get_db)):
+    return crud.update_test_suite(db, id, suite)

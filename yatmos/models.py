@@ -25,3 +25,14 @@ class TestSuite(Base):
 
     project = relationship("Project", back_populates="test_suites")
     parent = relationship("TestSuite", remote_side=id, backref="children")
+
+
+class TestCase(Base):
+    __tablename__ = "test_cases"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, unique=True)
+    desc = Column(String)
+    suite_id = Column(Integer, ForeignKey("test_suites.id"))
+
+    suite = relationship("TestSuite", backref="test_cases")
