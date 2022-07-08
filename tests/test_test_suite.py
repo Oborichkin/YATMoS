@@ -16,6 +16,7 @@ def test_get_project_test_suites(client, db_with_3_projects, db_with_3_suites):
     x, y, z = db_with_3_projects
     resp = client.get(f"/project/{x.id}/suites")
     assert resp.status_code == 200
+    assert len(resp.json()) == 3
 
 
 def test_delete_test_suite(client, db_with_3_suites):

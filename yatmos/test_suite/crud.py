@@ -7,7 +7,7 @@ def get_test_suite(db: Session, suite_id: int):
     return db.query(TestSuite).filter(TestSuite.id == suite_id).first()
 
 
-def get_test_suites(db: Session, project_id: int, skip: int = 0, limit: int = 0):
+def get_test_suites(db: Session, project_id: int, skip: int = 0, limit: int = 100):
     return db.query(TestSuite).filter(TestSuite.project_id == project_id).offset(skip).limit(limit).all()
 
 

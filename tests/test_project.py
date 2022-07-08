@@ -16,7 +16,7 @@ def test_get_empty_projects_list(client):
 
 
 def test_get_projects_list(client, db_with_3_projects):
-    resp = client.get("/projects")
+    resp = client.get("/projects/")
     assert resp.status_code == 200
     assert len(resp.json()) == 3
 
