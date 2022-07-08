@@ -1,8 +1,12 @@
+from typing import List
+
 from fastapi import Depends, APIRouter, HTTPException
 from sqlalchemy.orm import Session
 
 from .schema import TestCase, TestCaseUpdate
 from .crud import get_test_case, delete_test_case, update_test_case
+from ..test_step.schema import TestStep, TestStepCreate
+from ..test_step.crud import add_test_step, get_test_steps
 from ..dependencies import get_db
 
 router = APIRouter(prefix="/case", tags=["Test Case"])
@@ -25,3 +29,15 @@ def delete_case(id: int, db: Session = Depends(get_db)):
 @router.patch("/{id}")
 def update_case(id: int, case: TestCaseUpdate, db: Session = Depends(get_db)):
     return update_test_case(db, id, case)
+
+
+@router.post("/{id}/step", response_model=TestStep, response_description="Test step created", tags=["Test Step"])
+def create_test_step(id: int, test_step: TestStepCreate, db: Session = Depends(get_db)):
+    return add_test_step(db, test_step, case_id=id)
+
+
+@router.get(
+    "/{id}/steps", response_model=List[TestStep], response_description="List of test case steps", tags=["Test Step"]
+)
+def get_test_steps_for_case(id: int, db: Session = Depends(get_db)):
+    return get_test_steps(db, case_id=id)
