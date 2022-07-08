@@ -2,12 +2,11 @@ from .conftest import project_x
 
 
 def test_create_project(client):
-    resp = client.post("/project", json=project_x)
+    resp = client.post("/project/", json=project_x)
     assert resp.status_code == 200
     assert resp.json()["title"] == project_x["title"]
     assert resp.json()["desc"] == project_x["desc"]
     assert resp.json()["id"]
-    assert not resp.json()["test_suites"]
 
 
 def test_get_empty_projects_list(client):

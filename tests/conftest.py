@@ -4,9 +4,8 @@ from fastapi.testclient import TestClient
 
 from yatmos import app
 from yatmos.crud import create_project, create_test_suite
-from yatmos.routes import get_db
-from yatmos.models import Base
-from yatmos.database import engine, SessionLocal
+from yatmos.dependencies import get_db
+from yatmos.database import engine, SessionLocal, Base
 from yatmos.schemas import ProjectCreate, TestSuiteCreate
 
 
