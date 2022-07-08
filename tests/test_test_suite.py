@@ -1,4 +1,3 @@
-from yatmos import schemas
 from .conftest import test_suite_a
 
 

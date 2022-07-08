@@ -3,14 +3,14 @@ from typing import List
 from fastapi import Depends, HTTPException, APIRouter
 from sqlalchemy.orm import Session
 
-from ..schemas import Project, TestSuiteUpdate
-from ..crud.test_suite import update_test_suite, delete_test_suite, get_test_suite
+from .schema import TestSuite, TestSuiteUpdate
+from .crud import update_test_suite, delete_test_suite, get_test_suite
 from ..dependencies import get_db
 
 router = APIRouter(prefix="/suite", tags=["Test Suite"])
 
 
-@router.get("/{id}", response_model=Project, response_description="Project retrieved")
+@router.get("/{id}", response_model=TestSuite, response_description="Test Suite retrieved")
 def get_suite(id: int, db: Session = Depends(get_db)):
     suite = get_test_suite(db, suite_id=id)
     if not suite:

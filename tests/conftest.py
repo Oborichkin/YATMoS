@@ -3,10 +3,12 @@ import pytest
 from fastapi.testclient import TestClient
 
 from yatmos import app
-from yatmos.crud import create_project, create_test_suite
+from yatmos.project.crud import create_project
+from yatmos.test_suite.crud import create_test_suite
 from yatmos.dependencies import get_db
 from yatmos.database import engine, SessionLocal, Base
-from yatmos.schemas import ProjectCreate, TestSuiteCreate
+from yatmos.project.schema import ProjectCreate
+from yatmos.test_suite.schema import TestSuiteCreate
 
 
 project_x = {"title": "Project X", "desc": "Secret project X"}

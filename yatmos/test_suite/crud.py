@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from ..models import TestSuite
-from ..schemas import TestSuiteCreate, TestSuiteUpdate
+from .model import TestSuite
+from .schema import TestSuiteCreate, TestSuiteUpdate
 
 
 def get_test_suite(db: Session, suite_id: int):
