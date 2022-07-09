@@ -15,6 +15,9 @@ app.include_router(test_case_router)
 app.include_router(test_step_router)
 
 
+__version__ = "0.1.0"
+
+
 @app.get("/", tags=["Root"])
 def read_root():
-    return {"Hello": "World"}
+    return {"version": __version__}

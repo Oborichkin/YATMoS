@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from .schema import TestCase, TestCaseUpdate
 from .crud import get_test_case, delete_test_case, update_test_case
 from ..test_step.schema import TestStep, TestStepCreate
-from ..test_step.crud import add_test_step, get_test_steps
+from ..test_step.crud import add_test_step, get_test_steps, reorder_test_steps
 from ..dependencies import get_db
 
 router = APIRouter(prefix="/case", tags=["Test Case"])
@@ -41,3 +41,10 @@ def create_test_step(id: int, test_step: TestStepCreate, db: Session = Depends(g
 )
 def get_test_steps_for_case(id: int, db: Session = Depends(get_db)):
     return get_test_steps(db, case_id=id)
+
+
+@router.patch(
+    "/{id}/steps", response_model=List[TestStep], response_description="Reordered list of steps", tags=["Test Step"]
+)
+def reorder_steps_for_case(id: int, permutation: List[int], db: Session = Depends(get_db)):
+    return reorder_test_steps(db, case_id=id, permutation=permutation)

@@ -1,4 +1,7 @@
+from typing import List
+
 from sqlalchemy.orm import Session
+
 from ..test_case.model import TestCase
 from .model import TestStep
 from .schema import TestStepCreate, TestStepUpdate
@@ -34,3 +37,13 @@ def update_test_step(db: Session, step_id: int, step: TestStepUpdate):
     upd_test_step = upd_test_step.first()
     db.refresh(upd_test_step)
     return upd_test_step
+
+
+def reorder_test_steps(db: Session, case_id: int, permutation: List[int]):
+    steps = db.query(TestCase).filter(TestCase.id == case_id).first().steps
+    assert len(steps) == len(permutation)
+    for i, step_id in enumerate(permutation):
+        steps[i].position = len(steps) + step_id
+    db.commit()
+    steps.reorder()
+    return db.query(TestCase).filter(TestCase.id == case_id).first().steps

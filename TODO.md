@@ -6,10 +6,12 @@
 ### Add:
 
 - [ ] Test Runs
+- [ ] Users
+- [ ] Comments
 - [ ] Milestones
 - [ ] Dockerfile
 - [ ] GitHub Actions
-- [ ] Test Step reordering
+- [x] Test Step reordering
 
 ### Look into:
   - [ ] Nested routers. ex: /project/{id}/suite/{id}/test/{id} == /suite/{id}/test/{id} == /test/{id}
