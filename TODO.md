@@ -6,9 +6,11 @@
 ### Add:
 
 - [ ] Test Runs
+- [ ] Tags
 - [ ] Users
 - [ ] Comments
 - [ ] Milestones
+- [ ] DB configuration
 - [ ] Dockerfile
 - [ ] GitHub Actions
 - [x] Test Step reordering

@@ -5,9 +5,15 @@ from sqlalchemy.orm import Session
 
 from .schema import Project, ProjectCreate, ProjectUpdate
 from .crud import create_project, get_project, get_projects, update_project, delete_project
+from ..dependencies import get_db
+
+# Test Suites
 from ..test_suite.schema import TestSuite, TestSuiteCreate
 from ..test_suite.crud import get_test_suites, create_test_suite
-from ..dependencies import get_db
+
+# Test Runs
+from ..test_run.schema import TestRun, TestRunCreate
+from ..test_run.crud import get_test_runs, create_test_run
 
 router = APIRouter(prefix="/project", tags=["Project"])
 
@@ -56,3 +62,18 @@ def add_test_suite(id: int, test_suite: TestSuiteCreate, db: Session = Depends(g
 )
 def get_test_suite_for_project(id: int, db: Session = Depends(get_db)):
     return get_test_suites(db, project_id=id)
+
+
+@router.post("/{id}/run", response_model=TestRun, response_description="Test run created", tags=["Test Run"])
+def add_test_run(id: int, test_run: TestRunCreate, db: Session = Depends(get_db)):
+    return create_test_run(db, test_run, project_id=id)
+
+
+@router.get(
+    "/{id}/runs",
+    response_model=List[TestRun],
+    response_description="List of project test runs",
+    tags=["Test Run"],
+)
+def get_test_runs_for_project(id: int, db: Session = Depends(get_db)):
+    return get_test_runs(db, project_id=id)

@@ -12,3 +12,4 @@ class Project(Base):
     desc = Column(String)
 
     test_suites = relationship("TestSuite", back_populates="project")
+    test_runs = relationship("TestRun", back_populates="project")
