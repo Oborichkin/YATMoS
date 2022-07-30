@@ -3,23 +3,24 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-class TestStepBase(BaseModel):
+class SuiteBase(BaseModel):
     title: str
     desc: Optional[str] = None
 
 
-class TestStepCreate(TestStepBase):
+class SuiteCreate(SuiteBase):
     pass
 
 
-class TestStepUpdate(BaseModel):
+class SuiteUpdate(BaseModel):
     title: Optional[str]
     desc: Optional[str]
 
 
-class TestStep(TestStepBase):
+class Suite(SuiteBase):
     id: int
-    case_id: int
+    parent_id: Optional[int]
+    project_id: int
 
     class Config:
         orm_mode = True

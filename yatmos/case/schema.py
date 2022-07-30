@@ -3,21 +3,21 @@ from typing import Optional, List
 from pydantic import BaseModel
 
 
-class TestCaseBase(BaseModel):
+class CaseBase(BaseModel):
     title: str
     desc: Optional[str] = None
 
 
-class TestCaseCreate(TestCaseBase):
+class CaseCreate(CaseBase):
     pass
 
 
-class TestCaseUpdate(BaseModel):
+class CaseUpdate(BaseModel):
     title: Optional[str]
     desc: Optional[str]
 
 
-class TestCase(TestCaseBase):
+class Case(CaseBase):
     id: int
     suite_id: int
 

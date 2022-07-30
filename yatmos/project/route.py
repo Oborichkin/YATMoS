@@ -7,13 +7,13 @@ from .schema import Project, ProjectCreate, ProjectUpdate
 from .crud import create_project, get_project, get_projects, update_project, delete_project
 from ..dependencies import get_db
 
-# Test Suites
-from ..test_suite.schema import TestSuite, TestSuiteCreate
-from ..test_suite.crud import get_test_suites, create_test_suite
+# Suites
+from ..suite.schema import Suite, SuiteCreate
+from ..suite.crud import get_suites, create_suite
 
-# Test Runs
-from ..test_run.schema import TestRun, TestRunCreate
-from ..test_run.crud import get_test_runs, create_test_run
+# Runs
+from ..run.schema import Run, RunCreate
+from ..run.crud import get_runs, create_run
 
 router = APIRouter(prefix="/project", tags=["Project"])
 
@@ -49,31 +49,31 @@ def remove_project(id: int, db: Session = Depends(get_db)):
     return project
 
 
-@router.post("/{id}/suite", response_model=TestSuite, response_description="Test suite created", tags=["Test Suite"])
-def add_test_suite(id: int, test_suite: TestSuiteCreate, db: Session = Depends(get_db)):
-    return create_test_suite(db, test_suite, project_id=id)
+@router.post("/{id}/suite", response_model=Suite, response_description="Suite created", tags=["Suite"])
+def add_suite(id: int, suite: SuiteCreate, db: Session = Depends(get_db)):
+    return create_suite(db, suite, project_id=id)
 
 
 @router.get(
     "/{id}/suites",
-    response_model=List[TestSuite],
-    response_description="List of project test suites",
-    tags=["Test Suite"],
+    response_model=List[Suite],
+    response_description="List of project suites",
+    tags=["Suite"],
 )
-def get_test_suite_for_project(id: int, db: Session = Depends(get_db)):
-    return get_test_suites(db, project_id=id)
+def get_suite_for_project(id: int, db: Session = Depends(get_db)):
+    return get_suites(db, project_id=id)
 
 
-@router.post("/{id}/run", response_model=TestRun, response_description="Test run created", tags=["Test Run"])
-def add_test_run(id: int, test_run: TestRunCreate, db: Session = Depends(get_db)):
-    return create_test_run(db, test_run, project_id=id)
+@router.post("/{id}/run", response_model=Run, response_description="Run created", tags=["Run"])
+def add_run(id: int, run: RunCreate, db: Session = Depends(get_db)):
+    return create_run(db, run, project_id=id)
 
 
 @router.get(
     "/{id}/runs",
-    response_model=List[TestRun],
+    response_model=List[Run],
     response_description="List of project test runs",
-    tags=["Test Run"],
+    tags=["Run"],
 )
-def get_test_runs_for_project(id: int, db: Session = Depends(get_db)):
-    return get_test_runs(db, project_id=id)
+def get_runs_for_project(id: int, db: Session = Depends(get_db)):
+    return get_runs(db, project_id=id)

@@ -11,5 +11,5 @@ class Project(Base):
     title = Column(String, unique=True, index=True)
     desc = Column(String)
 
-    test_suites = relationship("TestSuite", back_populates="project")
-    test_runs = relationship("TestRun", back_populates="project")
+    suites = relationship("Suite", back_populates="project")
+    runs = relationship("Run", back_populates="project")

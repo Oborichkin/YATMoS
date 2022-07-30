@@ -5,7 +5,8 @@
 
 ### Add:
 
-- [ ] Test Runs
+- [ ] Runs
+- [ ] Custom Fields
 - [ ] Tags
 - [ ] Users
 - [ ] Comments
@@ -19,7 +20,7 @@
   - [ ] Nested routers. ex: /project/{id}/suite/{id}/test/{id} == /suite/{id}/test/{id} == /test/{id}
   - [x] Order of children in one-to-many relationships
   - [ ] Referencing old versions of models (e.g. old test run references test case that has been changed later)
-
+  - [ ] Keep history of changes
 ### New:
 - [ ] Alembic
 - [ ] GraphQL
