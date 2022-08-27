@@ -13,11 +13,17 @@ from yatmos.case.crud import create_case
 from yatmos.case.schema import CaseCreate
 from yatmos.step.crud import add_step
 from yatmos.step.schema import StepCreate
+from yatmos.run.crud import create_run
+from yatmos.run.schema import RunCreate
 
 
 project_x = {"title": "Project X", "desc": "Secret project X"}
 project_y = {"title": "Project Y", "desc": "Secret project Y"}
 project_z = {"title": "Project Z", "desc": "Secret project Z"}
+
+run_x = {"title": "Nightly", "desc": "Nightly run"}
+run_y = {"title": "Release", "desc": "Release run"}
+run_z = {"title": "Smoke", "desc": "Smoke tests run"}
 
 suite_a = {"title": "Suite A", "desc": "Main suite"}
 suite_b = {"title": "Suite B", "desc": "Secondary suite"}
@@ -79,3 +85,12 @@ def db_with_3_steps(empty_db, db_with_3_cases):
     b1 = add_step(empty_db, StepCreate(**step_b), a.id)
     c1 = add_step(empty_db, StepCreate(**step_c), a.id)
     yield a1, b1, c1
+
+
+@pytest.fixture
+def db_with_3_runs(empty_db, db_with_3_projects, db_with_3_cases):
+    x, y, z = db_with_3_projects
+    x1 = create_run(empty_db, RunCreate(**run_x), x.id)
+    y1 = create_run(empty_db, RunCreate(**run_y), x.id)
+    z1 = create_run(empty_db, RunCreate(**run_z), x.id)
+    yield x1, y1, z1
