@@ -1,12 +1,11 @@
 import setuptools
 
-from yatmos import __version__
 
 
 setuptools.setup(
     name="yatmos",
     packages=setuptools.find_packages(),
-    version=__version__,
+    version="0.1.0",
     description="Yet Another Test Managment System",
     author="Pavel Oborin",
     author_email="oborin.p@gmail.com",

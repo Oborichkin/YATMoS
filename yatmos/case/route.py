@@ -3,8 +3,8 @@ from typing import List
 from fastapi import Depends, APIRouter, HTTPException
 from sqlalchemy.orm import Session
 
+from . import crud
 from .schema import Case, CaseUpdate
-from .crud import get_case, delete_case, update_case
 from ..step.schema import Step, StepCreate
 from ..step.crud import add_step, get_steps, reorder_steps
 from ..dependencies import get_db
@@ -14,7 +14,7 @@ router = APIRouter(prefix="/case", tags=["Case"])
 
 @router.get("/{id}", response_model=Case, response_description="Case retrieved")
 def get_case(id: int, db: Session = Depends(get_db)):
-    case = get_case(db, case_id=id)
+    case = crud.get_case(db, case_id=id)
     if not case:
         raise HTTPException(404, "case not found")
     return case
@@ -22,13 +22,13 @@ def get_case(id: int, db: Session = Depends(get_db)):
 
 @router.delete("/{id}")
 def delete_case(id: int, db: Session = Depends(get_db)):
-    case = delete_case(db, case_id=id)
+    case = crud.delete_case(db, case_id=id)
     return case
 
 
 @router.patch("/{id}")
 def update_case(id: int, case: CaseUpdate, db: Session = Depends(get_db)):
-    return update_case(db, id, case)
+    return crud.update_case(db, id, case)
 
 
 @router.post("/{id}/step", response_model=Step, response_description="Step created", tags=["Step"])

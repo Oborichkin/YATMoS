@@ -3,7 +3,7 @@ PROJECT_NAME = yatmos
 .PHONY = test build push clean hooks
 
 run: venv
-	$(VENV)/uvicorn yatmos:app --reload
+	$(VENV)/uvicorn yatmos.main:app --reload
 
 install: venv hooks
 
