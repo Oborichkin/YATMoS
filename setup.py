@@ -1,7 +1,6 @@
 import setuptools
 
 
-
 setuptools.setup(
     name="yatmos",
     packages=setuptools.find_packages(),
@@ -11,9 +10,5 @@ setuptools.setup(
     author_email="oborin.p@gmail.com",
     url="https://github.com/Oborichkin/yatmos",
     python_requires=">=3.6",
-    install_requires=[
-        "fastapi",
-        "uvicorn[standard]",
-        "sqlalchemy",
-    ],
+    install_requires=["fastapi", "uvicorn[standard]", "sqlalchemy", "psycopg2"],
 )

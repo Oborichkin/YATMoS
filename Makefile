@@ -13,6 +13,9 @@ test: venv
 hooks: venv
 	$(VENV)/pre-commit install
 
+image:
+	docker build -t $(PROJECT_NAME) .
+
 build: venv clean
 	$(VENV)/python setup.py sdist bdist_wheel
 

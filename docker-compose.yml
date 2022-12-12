@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+
+  backend:
+    image: yatmos-backend
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      - DATABASE_URL=postgresql+psycopg2://admin:admin@db:5432/yatmos
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=yatmos
