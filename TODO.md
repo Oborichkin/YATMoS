@@ -12,7 +12,7 @@
 - [ ] Comments
 - [ ] Milestones
 - [ ] DB configuration
-- [ ] Dockerfile
+- [x] Dockerfile
 - [ ] GitHub Actions
 - [x] Test Step reordering
 
