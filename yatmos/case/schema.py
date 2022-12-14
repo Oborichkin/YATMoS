@@ -1,6 +1,13 @@
+from enum import Enum
 from typing import Optional, List
 
 from pydantic import BaseModel
+
+
+class Status(str, Enum):
+    UNKNOWN = -1
+    PASS = 0
+    FAIL = 1
 
 
 class CaseBase(BaseModel):

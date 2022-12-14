@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Enum
 from sqlalchemy.orm import relationship
 
+from .schema import Status
 from ..database import Base
 
 
@@ -17,11 +18,15 @@ class Suite(Base):
     parent = relationship("Suite", remote_side=id, backref="children")
     results = relationship("SuiteResult", back_populates="suite")
 
+    def make_result(self, run_id):
+        return SuiteResult(suite_id=self.id, run_id=run_id, status=Status.UNKNOWN)
+
 
 class SuiteResult(Base):
     __tablename__ = "suite_results"
     id = Column(Integer, primary_key=True, index=True)
-    result = Column(String)
+    comment = Column(String)
+    status = Column(Enum(Status))
     suite_id = Column(Integer, ForeignKey("suites.id"))
     run_id = Column(Integer, ForeignKey("runs.id"))
 

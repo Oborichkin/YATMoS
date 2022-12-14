@@ -1,9 +1,12 @@
+from typing import List
+
 from fastapi import Depends, APIRouter, HTTPException
 from sqlalchemy.orm import Session
 
 from . import crud
 from .schema import Run, RunUpdate
 from ..dependencies import get_db
+from yatmos.suite.schema import SuiteResult
 
 router = APIRouter(prefix="/run", tags=["Run"])
 
@@ -14,6 +17,12 @@ def get_run(id: int, db: Session = Depends(get_db)):
     if not run:
         raise HTTPException(404, "run not found")
     return run
+
+
+@router.get("/{id}/results", response_model=List[SuiteResult])
+def get_run_results(id: int, db: Session = Depends(get_db)):
+    run = get_run(id, db=db)
+    return run.results
 
 
 @router.delete("/{id}")
