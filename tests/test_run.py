@@ -17,15 +17,9 @@ def test_create_run(client, db_with_3_steps, db_with_3_projects):
     assert resp.status_code == 200, resp.reason
     assert resp.json() == run_json
 
-
-def test_create_full_run(client, db_with_3_steps, db_with_3_projects):
-    x, y, z = db_with_3_projects
-    resp = client.post(f"/project/{x.id}/full_run", json={"title": "Nightly run", "desc": "00:00 everyday run"})
-    assert resp.status_code == 200, resp.reason
-    resp = client.get(f"/run/{resp.json()['id']}/results")
+    resp = client.get(f"/run/{run_id}/results")
     assert resp.status_code == 200, resp.reason
     assert len(resp.json()) == 3
-
 
 def test_delete_run(client, db_with_3_projects, db_with_3_runs):
     x, y, z = db_with_3_projects

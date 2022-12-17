@@ -13,7 +13,7 @@ from ..suite.crud import get_suites, create_suite
 
 # Runs
 from ..run.schema import Run, RunCreate
-from ..run.crud import get_runs, create_run, create_full_run
+from ..run.crud import get_runs, create_run
 
 router = APIRouter(prefix="/project", tags=["Project"])
 
@@ -67,11 +67,6 @@ def get_suite_for_project(id: int, db: Session = Depends(get_db)):
 @router.post("/{id}/run", response_model=Run, response_description="Run created", tags=["Run"])
 def add_run(id: int, run: RunCreate, db: Session = Depends(get_db)):
     return create_run(db, run, project_id=id)
-
-
-@router.post("/{id}/full_run", response_model=Run, response_description="Run created", tags=["Run"])
-def add_full_run(id: int, run: RunCreate, db: Session = Depends(get_db)):
-    return create_full_run(db, run, project_id=id)
 
 
 @router.get(

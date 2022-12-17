@@ -18,23 +18,33 @@ def get_runs(db: Session, project_id: int, skip: int = 0, limit: int = 100):
 
 
 def create_run(db: Session, run: RunCreate, project_id: int):
-    new_run = Run(**run.dict(), project_id=project_id)
+    # TODO rollback all transactons if one fails
+    proj = db.query(Project).filter(Project.id == project_id).one()
+    if run.include_suites:
+        suites = [suite for suite in proj.suites if suite.id in run.include_suites]
+    elif run.exclude_suites:
+        suites = [suite for suite in proj.suites if suite.id not in run.exclude_suites]
+    else:
+        suites = proj.suites
+
+    # if run.include_tests:
+    #     tests = [test for suite in suites for tests in suite.cases if test.id in run.include_tests for test in tests]
+    # elif run.exclude_tests:
+    #     tests = [test for suite in suites for tests in suite.cases if test.id not in run.exclude_tests for test in tests]
+    # else:
+    #     tests = [test for suite in suites for tests in suite.cases for test in tests]
+
+    new_run = Run(**run.dict(exclude={"exclude_suites", "include_suites", "exclude_tests", "include_tests"}), project_id=project_id)
     db.add(new_run)
     db.commit()
     db.refresh(new_run)
-    return new_run
 
-
-def create_full_run(db: Session, run: RunCreate, project_id: int):
-    project = db.query(Project).filter(Project.id == project_id)
-    suites = db.query(Suite).filter(Suite.project_id == project_id).all()
-    new_run = Run(**run.dict(), project_id=project_id)
-    db.add(new_run)
-    db.commit()
-    db.refresh(new_run)
     new_suites = [suite.make_result(new_run.id) for suite in suites]
     db.add_all(new_suites)
     db.commit()
+
+    # TODO add cases
+
     return new_run
 
 
