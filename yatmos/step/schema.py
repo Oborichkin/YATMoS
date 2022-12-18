@@ -2,6 +2,8 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+from yatmos.common.enums import Status
+
 
 class StepBase(BaseModel):
     title: str
@@ -22,4 +24,21 @@ class Step(StepBase):
     case_id: int
 
     class Config:
+        orm_mode = True
+
+
+class StepResultBase(BaseModel):
+    step_id: int
+    case_id: int
+    status: Status = Status.UNKNOWN
+    comment: Optional[str]
+
+    class Config:
+        use_enum_values = True
+
+
+class StepResult(StepResultBase):
+    id: int
+
+    class Config(StepResultBase.Config):
         orm_mode = True

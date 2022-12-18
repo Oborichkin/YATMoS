@@ -1,10 +1,14 @@
 from sqlalchemy.orm import Session
-from .model import Case
+from .model import Case, CaseResult
 from .schema import CaseCreate, CaseUpdate
 
 
 def get_case(db: Session, case_id: int):
     return db.query(Case).filter(Case.id == case_id).first()
+
+
+def get_case_result(db: Session, case_id: int):
+    return db.query(CaseResult).filter(CaseResult.id == case_id).first()
 
 
 def get_cases(db: Session, suite_id: int, skip: int = 0, limit: int = 100):

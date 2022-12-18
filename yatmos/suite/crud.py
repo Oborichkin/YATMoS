@@ -1,10 +1,14 @@
 from sqlalchemy.orm import Session
-from .model import Suite
+from .model import Suite, SuiteResult
 from .schema import SuiteCreate, SuiteUpdate
 
 
 def get_suite(db: Session, suite_id: int):
     return db.query(Suite).filter(Suite.id == suite_id).first()
+
+
+def get_suite_result(db: Session, suite_id: int):
+    return db.query(SuiteResult).filter(SuiteResult.id == suite_id).first()
 
 
 def get_suites(db: Session, project_id: int, skip: int = 0, limit: int = 100):

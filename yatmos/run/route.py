@@ -5,8 +5,10 @@ from sqlalchemy.orm import Session
 
 from . import crud
 from .schema import Run, RunUpdate
-from ..dependencies import get_db
+from yatmos.dependencies import get_db
 from yatmos.suite.schema import SuiteResult
+from yatmos.suite.crud import get_suite_result
+from yatmos.case.schema import CaseResult
 
 router = APIRouter(prefix="/run", tags=["Run"])
 
@@ -19,10 +21,10 @@ def get_run(id: int, db: Session = Depends(get_db)):
     return run
 
 
-@router.get("/{id}/results", response_model=List[SuiteResult])
-def get_run_results(id: int, db: Session = Depends(get_db)):
+@router.get("/{id}/suites", response_model=List[SuiteResult])
+def get_run_suites(id: int, db: Session = Depends(get_db)):
     run = get_run(id, db=db)
-    return run.results
+    return run.suites
 
 
 @router.delete("/{id}")

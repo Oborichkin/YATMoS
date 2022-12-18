@@ -9,10 +9,7 @@ class RunBase(BaseModel):
 
 
 class RunCreate(RunBase):
-    include_suites: List[int] = []
-    exclude_suites: List[int] = []
-    include_tests: List[int] = []
-    exclude_tests: List[int] = []
+    pass
 
 
 class RunUpdate(RunBase):
@@ -23,7 +20,6 @@ class RunUpdate(RunBase):
 class Run(RunBase):
     id: int
     project_id: int
-    
 
     class Config:
         orm_mode = True

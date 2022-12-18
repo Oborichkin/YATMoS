@@ -3,11 +3,7 @@ from typing import Optional, List
 
 from pydantic import BaseModel
 
-
-class Status(str, Enum):
-    UNKNOWN = -1
-    PASS = 0
-    FAIL = 1
+from yatmos.common.enums import Status
 
 
 class CaseBase(BaseModel):
@@ -47,7 +43,7 @@ class CaseResultUpdate(BaseModel):
     comment: Optional[str]
 
 
-class CaseResult(CaseResultUpdate):
+class CaseResult(CaseResultBase):
     id: int
 
     class Config(CaseResultUpdate.Config):

@@ -17,51 +17,17 @@ def test_create_run(client, db_with_3_steps, db_with_3_projects):
     assert resp.status_code == 200, resp.reason
     assert resp.json() == run_json
 
-    resp = client.get(f"/run/{run_id}/results")
+    resp = client.get(f"/run/{run_id}/suites")
     assert resp.status_code == 200, resp.reason
     assert len(resp.json()) == 3
 
-    resp = client.get(f"")
-
-
-def test_create_run_with_include_suites(client, db_with_3_steps, db_with_3_projects, db_with_3_suites):
-    x, y, z = db_with_3_projects
-    a, b, c = db_with_3_suites
-    resp = client.post(
-        f"/project/{x.id}/run", json={"title": "Nightly run", "desc": "00:00 everyday run", "include_suites": [a.id]}
-    )
-
-    resp = client.get(f"/run/{resp.json()['id']}/results")
+    resp = client.get(f"/suite/result/{resp.json()[0]['id']}/cases")
     assert resp.status_code == 200, resp.reason
-    assert len(resp.json()) == 1
-
-
-def test_create_run_with_exclude_suites(client, db_with_3_steps, db_with_3_projects, db_with_3_suites):
-    x, y, z = db_with_3_projects
-    a, b, c = db_with_3_suites
-    resp = client.post(
-        f"/project/{x.id}/run",
-        json={"title": "Nightly run", "desc": "00:00 everyday run", "exclude_suites": [b.id, c.id]},
-    )
-
-    resp = client.get(f"/run/{resp.json()['id']}/results")
-    assert resp.status_code == 200, resp.reason
-    assert len(resp.json()) == 1
-
-
-def test_delete_run(client, db_with_3_projects, db_with_3_runs):
-    x, y, z = db_with_3_projects
-    a, b, c = db_with_3_runs
-    resp = client.get(f"/project/{x.id}/runs")
     assert len(resp.json()) == 3
 
-    resp = client.delete(f"/run/{a.id}")
-    assert resp.status_code == 200
-
-    resp = client.get(f"/project/{x.id}/runs")
-    assert len(resp.json()) == 2
-    resp = client.get(f"/run/{a.id}")
-    assert resp.status_code == 404
+    resp = client.get(f"/case/result/{resp.json()[0]['id']}/steps")
+    assert resp.status_code == 200, resp.reason
+    assert len(resp.json()) == 3
 
 
 def test_update_run(client, db_with_3_runs):

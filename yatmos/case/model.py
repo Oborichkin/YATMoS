@@ -19,8 +19,14 @@ class Case(Base):
     steps = relationship("Step", order_by="Step.position", collection_class=ordering_list("position"))
     results = relationship("CaseResult", back_populates="case")
 
-    def make_result(self, suite_result_id):
-        return CaseResult(case_id=self.id, suite_id=suite_result_id)
+    def make_result(self, db, run_id, suite_id):
+        res = CaseResult(run_id=run_id, suite_id=suite_id, case_id=self.id)
+        db.add(res)
+        db.commit()
+        db.refresh(res)
+
+        for step in self.steps:
+            step.make_result(db=db, case_id=res.id)
 
 
 class CaseResult(Base):
@@ -31,6 +37,9 @@ class CaseResult(Base):
     status = Column(Enum(Status), default=Status.UNKNOWN)
     case_id = Column(Integer, ForeignKey("cases.id"))
     suite_id = Column(Integer, ForeignKey("suite_results.id"))
+    run_id = Column(Integer, ForeignKey("runs.id"))
 
     case = relationship("Case", back_populates="results")
+    run = relationship("Run", back_populates="cases")
     suite = relationship("SuiteResult", back_populates="cases")
+    steps = relationship("StepResult", back_populates="case")
