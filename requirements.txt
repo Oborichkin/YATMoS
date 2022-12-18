@@ -11,3 +11,5 @@ pre-commit
 # Docs
 sphinx
 myst-parser
+# Optional Dependencies
+psycopg2-binary
