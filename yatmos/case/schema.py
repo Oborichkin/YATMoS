@@ -30,3 +30,25 @@ class Case(CaseBase):
 
     class Config:
         orm_mode = True
+
+
+class CaseResultBase(BaseModel):
+    case_id: int
+    suite_id: int
+    status: Status = Status.UNKNOWN
+    comment: Optional[str]
+
+    class Config:
+        use_enum_values = True
+
+
+class CaseResultUpdate(BaseModel):
+    status: Optional[Status]
+    comment: Optional[str]
+
+
+class CaseResult(CaseResultUpdate):
+    id: int
+
+    class Config(CaseResultUpdate.Config):
+        orm_mode = True

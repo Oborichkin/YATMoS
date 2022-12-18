@@ -27,14 +27,19 @@ def create_run(db: Session, run: RunCreate, project_id: int):
     else:
         suites = proj.suites
 
-    # if run.include_tests:
-    #     tests = [test for suite in suites for tests in suite.cases if test.id in run.include_tests for test in tests]
-    # elif run.exclude_tests:
-    #     tests = [test for suite in suites for tests in suite.cases if test.id not in run.exclude_tests for test in tests]
-    # else:
-    #     tests = [test for suite in suites for tests in suite.cases for test in tests]
+    if run.include_tests:
+        tests = [test for suite in suites for tests in suite.cases if test.id in run.include_tests for test in tests]
+    elif run.exclude_tests:
+        tests = [
+            test for suite in suites for tests in suite.cases if test.id not in run.exclude_tests for test in tests
+        ]
+    else:
+        tests = [test for suite in suites for test in suite.cases]
 
-    new_run = Run(**run.dict(exclude={"exclude_suites", "include_suites", "exclude_tests", "include_tests"}), project_id=project_id)
+    new_run = Run(
+        **run.dict(exclude={"exclude_suites", "include_suites", "exclude_tests", "include_tests"}),
+        project_id=project_id
+    )
     db.add(new_run)
     db.commit()
     db.refresh(new_run)

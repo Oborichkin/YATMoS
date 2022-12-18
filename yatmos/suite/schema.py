@@ -1,7 +1,8 @@
-from enum import Enum
 from typing import Optional
 
 from pydantic import BaseModel
+
+from yatmos.common.enums import Status
 
 
 class SuiteBase(BaseModel):
@@ -27,12 +28,6 @@ class Suite(SuiteBase):
         orm_mode = True
 
 
-class Status(str, Enum):
-    UNKNOWN = "UNKNOWN"
-    PASS = "PASS"
-    FAIL = "FAIL"
-
-
 class SuiteResultBase(BaseModel):
     suite_id: int
     run_id: int
@@ -51,6 +46,5 @@ class SuiteResultUpdate(BaseModel):
 class SuiteResult(SuiteResultBase):
     id: int
 
-    class Config:
+    class Config(SuiteResultBase.Config):
         orm_mode = True
-        use_enum_values = True

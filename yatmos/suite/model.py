@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Enum
 from sqlalchemy.orm import relationship
 
-from .schema import Status
-from ..database import Base
+from yatmos.database import Base
+from yatmos.common.enums import Status
 
 
 class Suite(Base):
@@ -19,16 +19,17 @@ class Suite(Base):
     results = relationship("SuiteResult", back_populates="suite")
 
     def make_result(self, run_id):
-        return SuiteResult(suite_id=self.id, run_id=run_id, status=Status.UNKNOWN)
+        return SuiteResult(suite_id=self.id, run_id=run_id)
 
 
 class SuiteResult(Base):
     __tablename__ = "suite_results"
     id = Column(Integer, primary_key=True, index=True)
     comment = Column(String)
-    status = Column(Enum(Status))
+    status = Column(Enum(Status), default=Status.UNKNOWN)
     suite_id = Column(Integer, ForeignKey("suites.id"))
     run_id = Column(Integer, ForeignKey("runs.id"))
 
-    run = relationship("Run", back_populates="results")
     suite = relationship("Suite", back_populates="results")
+    run = relationship("Run", back_populates="results")
+    cases = relationship("CaseResult", back_populates="suite")
