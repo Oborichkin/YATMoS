@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 from .model import Run
 from .schema import RunCreate, RunUpdate
 from yatmos.project.model import Project
-from yatmos.suite.model import Suite
 
 
 def get_run(db: Session, run_id: int):

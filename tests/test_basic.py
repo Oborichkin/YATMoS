@@ -1,5 +1,3 @@
-import pytest
-
 from yatmos import __version__
 
 

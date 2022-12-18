@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship, Session

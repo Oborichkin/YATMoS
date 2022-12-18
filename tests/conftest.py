@@ -3,7 +3,6 @@ import pytest
 from fastapi.testclient import TestClient
 
 from yatmos.main import app
-from yatmos.dependencies import get_db
 from yatmos.database import engine, SessionLocal, Base
 from yatmos.project.crud import create_project
 from yatmos.project.schema import ProjectCreate

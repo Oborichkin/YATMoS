@@ -3,7 +3,6 @@ from sqlalchemy.orm import relationship
 
 from yatmos.database import Base
 from yatmos.common.enums import Status
-from .schema import SuiteResultBase
 
 
 class Suite(Base):

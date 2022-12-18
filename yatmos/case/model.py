@@ -3,7 +3,6 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.orderinglist import ordering_list
 
 from yatmos.database import Base
-from yatmos.step.model import Step  # FIXME: Remove this line
 from yatmos.common.enums import Status
 
 

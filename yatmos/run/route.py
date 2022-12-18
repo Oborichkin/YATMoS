@@ -7,8 +7,6 @@ from . import crud
 from .schema import Run, RunUpdate
 from yatmos.dependencies import get_db
 from yatmos.suite.schema import SuiteResult
-from yatmos.suite.crud import get_suite_result
-from yatmos.case.schema import CaseResult
 
 router = APIRouter(prefix="/run", tags=["Run"])
 
