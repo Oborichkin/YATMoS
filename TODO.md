@@ -5,15 +5,15 @@
 
 ### Add:
 
-- [ ] Runs
+- [x] Runs
 - [ ] Custom Fields
 - [ ] Tags
 - [ ] Users
 - [ ] Comments
 - [ ] Milestones
-- [ ] DB configuration
+- [x] DB configuration
 - [x] Dockerfile
-- [ ] GitHub Actions
+- [x] GitHub Actions
 - [x] Test Step reordering
 
 ### Look into:
