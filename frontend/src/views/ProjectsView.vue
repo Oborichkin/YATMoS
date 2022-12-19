@@ -1,24 +1,27 @@
 <template>
   <div class="projects">
-    <v-card
-      v-bind:key="project.title"
-      v-for="project in projects"
-      elevation="2"
-      style="margin-bottom: 15px"
-    >
+    <v-card v-bind:key="project.title" v-for="project in projects" elevation="2" style="margin-bottom: 15px">
       <v-card-title>
         {{ project.title }}
       </v-card-title>
       <v-card-subtitle>
         {{ project.desc }}
       </v-card-subtitle>
+      <v-card-text>
+        <v-chip-group column>
+          <v-chip class="ma-2" color="green" text-color="white">
+            <v-avatar left class="green darken-4">
+              {{ project.suiteCount }}
+            </v-avatar>
+            Years
+          </v-chip>
+        </v-chip-group>
+      </v-card-text>
     </v-card>
 
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" absolute bottom right v-bind="attrs" v-on="on"
-          ><v-icon>mdi-plus</v-icon></v-btn
-        >
+        <v-btn color="primary" absolute bottom right v-bind="attrs" v-on="on"><v-icon>mdi-plus</v-icon></v-btn>
       </template>
 
       <v-card>
@@ -28,16 +31,9 @@
 
         <v-card-text>
           <v-form ref="form" lazy-validation>
-            <v-text-field
-              v-model="name"
-              label="Project name"
-              required
-            ></v-text-field>
+            <v-text-field v-model="name" label="Project name" required></v-text-field>
 
-            <v-text-field
-              v-model="desc"
-              label="Project Description"
-            ></v-text-field>
+            <v-text-field v-model="desc" label="Project Description"></v-text-field>
           </v-form>
         </v-card-text>
 
