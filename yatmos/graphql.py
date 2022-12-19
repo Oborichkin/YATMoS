@@ -16,9 +16,13 @@ from yatmos.step.model import Step, StepResult  # noqa: F401
 strawberry_sqlalchemy_mapper = StrawberrySQLAlchemyMapper()
 
 
+def get_suite_count(root: ProjectModel) -> int:
+    return len(root.suites)
+
+
 @strawberry_sqlalchemy_mapper.type(ProjectModel)
 class Project:
-    pass
+    suite_count: int = strawberry.field(resolver=get_suite_count)
 
 
 @strawberry_sqlalchemy_mapper.type(SuiteModel)
