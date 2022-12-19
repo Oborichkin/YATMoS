@@ -10,5 +10,12 @@ setuptools.setup(
     author_email="oborin.p@gmail.com",
     url="https://github.com/Oborichkin/yatmos",
     python_requires=">=3.6",
-    install_requires=["fastapi", "uvicorn[standard]", "sqlalchemy", "psycopg2"],
+    install_requires=[
+        "fastapi",
+        "uvicorn[standard]",
+        "sqlalchemy",
+        "psycopg2",
+        "strawberry-graphql[debug-server]",
+        "strawberry-sqlalchemy-mapper",
+    ],
 )

@@ -14,8 +14,8 @@ class Suite(Base):
     parent_id = Column(Integer, ForeignKey("suites.id"))
     project_id = Column(Integer, ForeignKey("projects.id"))
 
-    project = relationship("Project", back_populates="suites")
-    parent = relationship("Suite", remote_side=id, backref="children")
+    project = relationship("Project", back_populates="suites", uselist=False)
+    parent = relationship("Suite", remote_side=id, backref="children", uselist=False)
     results = relationship("SuiteResult", back_populates="suite")
 
     def make_result(self, db, run_id):

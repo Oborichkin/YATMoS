@@ -10,11 +10,11 @@ from yatmos.run.model import Run
 class Project(Base):
     __tablename__ = "projects"
 
-    id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, unique=True, index=True)
-    desc = Column(String)
+    id: Column[int] = Column(Integer, primary_key=True, index=True)
+    title: Column[str] = Column(String, unique=True, index=True)
+    desc: Column[str] = Column(String)
 
-    suites = relationship("Suite", back_populates="project")
+    suites = relationship("Suite", lazy="joined", back_populates="project")
     runs = relationship("Run", back_populates="project")
 
     def make_run(self, db: Session, title: str, desc: Optional[str] = None):
