@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from . import __version__
 from .database import engine, Base
@@ -11,11 +12,21 @@ from .run.route import router as run_router
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
 app.include_router(project_router)
 app.include_router(suite_router)
 app.include_router(case_router)
 app.include_router(step_router)
 app.include_router(run_router)
+
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"]
+)
 
 
 @app.get("/", tags=["Root"])
