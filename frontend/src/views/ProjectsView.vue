@@ -13,7 +13,7 @@
             <v-avatar left class="green darken-4">
               {{ project.suiteCount }}
             </v-avatar>
-            Years
+            Suites
           </v-chip>
         </v-chip-group>
       </v-card-text>
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import gql from 'graphql-tag';
 
 export default {
   name: "ProjectsView",
@@ -59,18 +59,20 @@ export default {
       this.dialog = false;
     },
   },
+  apollo: {
+    projects: gql`query {
+      projects {
+        title
+        suiteCount
+      }
+    }`,
+  },
   data() {
     return {
       name: '',
       desc: null,
-      dialog: false,
-      projects: [],
+      dialog: false
     };
-  },
-  mounted() {
-    axios
-      .get("http://127.0.0.1:8000/projects/")
-      .then((response) => (this.projects = response.data));
-  },
+  }
 };
 </script>
