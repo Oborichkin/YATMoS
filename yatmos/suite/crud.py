@@ -16,7 +16,7 @@ def get_suites(db: Session, project_id: int, skip: int = 0, limit: int = 100):
 
 
 def create_suite(db: Session, suite: SuiteCreate, project_id: int):
-    new_suite = Suite(**suite.dict(), project_id=project_id)
+    new_suite = Suite(**suite.model_dump(), project_id=project_id)
     db.add(new_suite)
     db.commit()
     db.refresh(new_suite)
@@ -31,7 +31,7 @@ def delete_suite(db: Session, suite_id: int):
 
 def update_suite(db: Session, suite_id: int, suite: SuiteUpdate):
     upd_suite = db.query(Suite).filter(Suite.id == suite_id)
-    upd_suite.update(suite.dict(exclude_unset=True))
+    upd_suite.update(suite.model_dump(exclude_unset=True))
     db.commit()
     upd_suite = upd_suite.first()
     db.refresh(upd_suite)

@@ -14,7 +14,7 @@ def get_runs(db: Session, project_id: int, skip: int = 0, limit: int = 100):
 
 def create_run(db: Session, run: RunCreate, project_id: int):
     proj = db.query(Project).filter(Project.id == project_id).one()
-    return proj.make_run(db, **run.dict())
+    return proj.make_run(db, **run.model_dump())
 
 
 def delete_run(db: Session, run_id: int):
@@ -25,7 +25,7 @@ def delete_run(db: Session, run_id: int):
 
 def update_run(db: Session, run_id: int, run: RunUpdate):
     upd_run = db.query(Run).filter(Run.id == run_id)
-    upd_run.update(run.dict(exclude_unset=True))
+    upd_run.update(run.model_dump(exclude_unset=True))
     db.commit()
     upd_run = upd_run.first()
     db.refresh(upd_run)

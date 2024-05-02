@@ -15,35 +15,38 @@ class CaseCreate(CaseBase):
 
 
 class CaseUpdate(BaseModel):
-    title: Optional[str]
-    desc: Optional[str]
+    title: Optional[str] = None
+    desc: Optional[str] = None
 
 
 class Case(CaseBase):
     id: int
     suite_id: int
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
 
 
 class CaseResultBase(BaseModel):
     case_id: int
     suite_id: int
     status: Status = Status.UNKNOWN
-    comment: Optional[str]
+    comment: Optional[str] = None
 
-    class Config:
-        use_enum_values = True
+    model_config = {
+        "use_enum_values": True
+    }
 
 
 class CaseResultUpdate(BaseModel):
-    status: Optional[Status]
-    comment: Optional[str]
+    status: Optional[Status] = None
+    comment: Optional[str] = None
 
 
 class CaseResult(CaseResultBase):
     id: int
 
-    class Config(CaseResultUpdate.Config):
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }

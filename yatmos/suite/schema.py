@@ -7,7 +7,7 @@ from yatmos.common.enums import Status
 
 class SuiteBase(BaseModel):
     title: str
-    desc: Optional[str]
+    desc: Optional[str] = None
 
 
 class SuiteCreate(SuiteBase):
@@ -15,36 +15,40 @@ class SuiteCreate(SuiteBase):
 
 
 class SuiteUpdate(BaseModel):
-    title: Optional[str]
-    desc: Optional[str]
+    title: Optional[str] = None
+    desc: Optional[str] = None
 
 
 class Suite(SuiteBase):
     id: int
-    parent_id: Optional[int]
+    parent_id: Optional[int] = None
     project_id: int
 
-    class Config:
-        orm_mode = True
-
+    model_config = {
+        "from_attributes": True
+    }
 
 class SuiteResultBase(BaseModel):
     suite_id: int
     run_id: int
     status: Status = Status.UNKNOWN
-    comment: Optional[str]
+    comment: Optional[str] = None
 
-    class Config:
-        use_enum_values = True
-
+    model_config = {
+        "use_enum_values": True
+    }
 
 class SuiteResultUpdate(BaseModel):
-    status: Optional[Status]
-    comment: Optional[str]
+    status: Optional[Status] = None
+    comment: Optional[str] = None
 
 
 class SuiteResult(SuiteResultBase):
     id: int
 
-    class Config(SuiteResultBase.Config):
-        orm_mode = True
+    model_config = {
+        "from_attributes": True,
+        # Надо ли это дублировать если в родительском классе уже указано?
+        "use_enum_values": True,
+    }
+

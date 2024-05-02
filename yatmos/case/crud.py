@@ -16,7 +16,7 @@ def get_cases(db: Session, suite_id: int, skip: int = 0, limit: int = 100):
 
 
 def create_case(db: Session, case: CaseCreate, suite_id: int):
-    new_case = Case(**case.dict(), suite_id=suite_id)
+    new_case = Case(**case.model_dump(), suite_id=suite_id)
     db.add(new_case)
     db.commit()
     db.refresh(new_case)
@@ -31,7 +31,7 @@ def delete_case(db: Session, case_id: int):
 
 def update_case(db: Session, case_id: int, case: CaseUpdate):
     upd_case = db.query(Case).filter(Case.id == case_id)
-    upd_case.update(case.dict(exclude_unset=True))
+    upd_case.update(case.model_dump(exclude_unset=True))
     db.commit()
     upd_case = upd_case.first()
     db.refresh(upd_case)

@@ -17,7 +17,7 @@ def get_steps(db: Session, case_id: int):
 
 def add_step(db: Session, step: StepCreate, case_id: int):
     case = db.query(Case).filter(Case.id == case_id).first()
-    new_step = Step(**step.dict(), case_id=case_id)
+    new_step = Step(**step.model_dump(), case_id=case_id)
     case.steps.append(new_step)
     db.commit()
     db.refresh(new_step)
@@ -32,7 +32,7 @@ def delete_step(db: Session, step_id: int):
 
 def update_step(db: Session, step_id: int, step: StepUpdate):
     upd_step = db.query(Step).filter(Step.id == step_id)
-    upd_step.update(step.dict(exclude_unset=True))
+    upd_step.update(step.model_dump(exclude_unset=True))
     db.commit()
     upd_step = upd_step.first()
     db.refresh(upd_step)

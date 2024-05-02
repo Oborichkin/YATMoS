@@ -30,7 +30,7 @@ def test_delete_case(client, db_with_3_cases):
 def test_update_case(client, db_with_3_cases):
     a, b, c = db_with_3_cases
     resp = client.patch(f"/case/{a.id}", json={"title": "Case AAA"})
-    assert resp.status_code == 200
+    assert resp.status_code == 200, resp.json()
     assert resp.json()["title"] == "Case AAA"
     resp = client.get(f"/case/{a.id}")
     assert resp.status_code == 200

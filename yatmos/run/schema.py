@@ -13,13 +13,14 @@ class RunCreate(RunBase):
 
 
 class RunUpdate(RunBase):
-    title: Optional[str]
-    desc: Optional[str]
+    title: Optional[str] = None
+    desc: Optional[str] = None
 
 
 class Run(RunBase):
     id: int
     project_id: int
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }

@@ -15,30 +15,34 @@ class StepCreate(StepBase):
 
 
 class StepUpdate(BaseModel):
-    title: Optional[str]
-    desc: Optional[str]
+    title: Optional[str] = None
+    desc: Optional[str] = None
 
 
 class Step(StepBase):
     id: int
     case_id: int
 
-    class Config:
-        orm_mode = True
+    model_config = {
+        "from_attributes": True
+    }
 
 
 class StepResultBase(BaseModel):
     step_id: int
     case_id: int
     status: Status = Status.UNKNOWN
-    comment: Optional[str]
+    comment: Optional[str] = None
 
-    class Config:
-        use_enum_values = True
-
+    model_config = {
+        "use_enum_values": True
+    }
 
 class StepResult(StepResultBase):
     id: int
 
-    class Config(StepResultBase.Config):
-        orm_mode = True
+    model_config = {
+        "from_attributes": True,
+        # Надо ли это дублировать если уже определено в StepResultBase?
+        "use_enum_values": True
+    }

@@ -12,7 +12,7 @@ def get_projects(db: Session, skip: int = 0, limit: int = 100):
 
 
 def create_project(db: Session, project: ProjectCreate):
-    new_project = Project(**project.dict())
+    new_project = Project(**project.model_dump())
     db.add(new_project)
     db.commit()
     db.refresh(new_project)
@@ -27,7 +27,7 @@ def delete_project(db: Session, project_id: int):
 
 def update_project(db: Session, project_id: int, project: ProjectUpdate):
     upd_project = db.query(Project).filter(Project.id == project_id)
-    upd_project.update(project.dict(exclude_unset=True))
+    upd_project.update(project.model_dump(exclude_unset=True))
     db.commit()
     upd_project = upd_project.first()
     db.refresh(upd_project)
