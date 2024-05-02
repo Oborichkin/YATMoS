@@ -14,8 +14,6 @@ setuptools.setup(
         "fastapi",
         "uvicorn[standard]",
         "sqlalchemy",
-        "psycopg2",
-        "strawberry-graphql[debug-server]",
-        "strawberry-sqlalchemy-mapper",
+        "psycopg2"
     ],
 )

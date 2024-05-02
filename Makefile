@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 PROJECT_NAME = yatmos
 
 .PHONY = test build push clean hooks
@@ -5,13 +7,10 @@ PROJECT_NAME = yatmos
 run: venv
 	$(VENV)/uvicorn yatmos.main:app --reload
 
-install: venv hooks
+install: venv
 
 test: venv
 	ENVIRONMENT=testing $(VENV)/pytest --cov=$(PROJECT_NAME) --cov-report=html --cov-report=term tests/
-
-hooks: venv
-	$(VENV)/pre-commit install
 
 image:
 	docker build -t $(PROJECT_NAME) .
@@ -19,11 +18,11 @@ image:
 build: venv clean
 	$(VENV)/python setup.py sdist bdist_wheel
 
-sphinx: venv
-	. $(VENV)/activate && cd docs && $(MAKE) html
-
 clean:
-	rm -rf build dist *.egg-info
+	rm -rf build dist *.egg-info .pytest_cache htmlcov .coverage sqlite.db
+	find . | grep -E '(/__pycache__$$|\.pyc$$|\.pyo$$)' | xargs rm -rf
+
+clean-all: clean clean-venv
 
 include Makefile.venv
 Makefile.venv:

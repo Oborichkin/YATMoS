@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from . import __version__
-from .graphql import graphql_app
 from .database import engine, Base
 from .project.route import router as project_router
 from .suite.route import router as suite_router
@@ -19,7 +18,6 @@ app.include_router(suite_router)
 app.include_router(case_router)
 app.include_router(step_router)
 app.include_router(run_router)
-app.include_router(graphql_app, prefix="/graphql")
 
 origins = [
     "http://localhost",

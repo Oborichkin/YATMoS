@@ -1,15 +1,5 @@
 # Tests
+# TODO засунуть это в setup.py?
 pytest
 pytest-cov
 httpx
-# Linting & Formatting
-flake8
-black
-# CI
-twine
-pre-commit
-# Docs
-sphinx
-myst-parser
-# Optional Dependencies
-psycopg2-binary

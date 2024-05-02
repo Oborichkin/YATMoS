@@ -22,4 +22,4 @@
 
 ### New:
 - [ ] Alembic
-- [ ] GraphQL
+
