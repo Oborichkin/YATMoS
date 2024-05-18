@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
 from . import __version__
@@ -13,11 +13,14 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-app.include_router(project_router)
-app.include_router(suite_router)
-app.include_router(case_router)
-app.include_router(step_router)
-app.include_router(run_router)
+api_subpath = APIRouter(prefix="/api")
+api_subpath.include_router(project_router)
+api_subpath.include_router(suite_router)
+api_subpath.include_router(case_router)
+api_subpath.include_router(step_router)
+api_subpath.include_router(run_router)
+
+app.include_router(api_subpath)
 
 origins = [
     "http://localhost",
