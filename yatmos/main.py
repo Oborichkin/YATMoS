@@ -1,7 +1,8 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, Request
+from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.templating import Jinja2Templates
 
-from . import __version__
 from .database import engine, Base
 from .project.route import router as project_router
 from .suite.route import router as suite_router
@@ -31,7 +32,13 @@ app.add_middleware(
     CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"]
 )
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-@app.get("/", tags=["Root"])
-def read_root():
-    return {"version": __version__}
+templates = Jinja2Templates(directory="templates")
+
+
+@app.get("/")
+def read_root(request: Request):
+    return templates.TemplateResponse(
+        request=request, name="index.html"
+    )
