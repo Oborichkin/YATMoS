@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 
 from yatmos.database import Base
 from yatmos.common.enums import Status
+from yatmos.case.model import CaseResult
 
 
 class Suite(Base):
@@ -39,4 +40,4 @@ class SuiteResult(Base):
 
     suite = relationship("Suite", back_populates="results")
     run = relationship("Run", back_populates="suites")
-    cases = relationship("CaseResult", back_populates="suite")
+    cases = relationship(CaseResult, back_populates="suite")

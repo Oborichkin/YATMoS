@@ -4,6 +4,7 @@ from sqlalchemy.ext.orderinglist import ordering_list
 
 from yatmos.database import Base
 from yatmos.common.enums import Status
+from yatmos.step.model import Step
 
 
 class Case(Base):
@@ -15,7 +16,7 @@ class Case(Base):
     suite_id = Column(Integer, ForeignKey("suites.id"))
 
     suite = relationship("Suite", backref="cases")
-    steps = relationship("Step", order_by="Step.position", collection_class=ordering_list("position"))
+    steps = relationship(Step, order_by="Step.position", collection_class=ordering_list("position"))
     results = relationship("CaseResult", back_populates="case")
 
     def make_result(self, db, run_id, suite_id):

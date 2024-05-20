@@ -1,6 +1,7 @@
 SHELL := /bin/bash
 
 PROJECT_NAME = yatmos
+ENVIRONMENT = testing
 
 .PHONY = test build push clean hooks
 
@@ -8,6 +9,9 @@ run: venv
 	$(VENV)/uvicorn yatmos.main:app --reload
 
 install: venv
+
+seed:
+	ENVIRONMENT=testing $(VENV)/python yatmos/seed.py
 
 test: venv
 	ENVIRONMENT=testing $(VENV)/pytest --cov=$(PROJECT_NAME) --cov-report=html --cov-report=term tests/
