@@ -1,9 +1,9 @@
-### Fixes:
+# Fixes:
 
 - [ ] Cascase delete handling
 - [ ] Unqiue constraints checking
 
-### Add:
+# Add:
 
 - [x] Runs
 - [ ] Custom Fields
@@ -16,13 +16,9 @@
 - [x] GitHub Actions
 - [x] Test Step reordering
 
-### Look into:
-  - [ ] Referencing old versions of models (e.g. old test run references test case that has been changed later)
-  - [ ] Keep history of changes
+# New:
+- [ ] Alembic ?
 
-### New:
-- [ ] Alembic
+# Other
 
-
-
-
+- [Обновление сюит и тестов, отображение информации о Run'е](docs/updates.md)

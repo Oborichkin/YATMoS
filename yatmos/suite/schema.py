@@ -28,6 +28,7 @@ class Suite(SuiteBase):
         "from_attributes": True
     }
 
+
 class SuiteResultBase(BaseModel):
     suite_id: int
     run_id: int
@@ -37,6 +38,7 @@ class SuiteResultBase(BaseModel):
     model_config = {
         "use_enum_values": True
     }
+
 
 class SuiteResultUpdate(BaseModel):
     status: Optional[Status] = None

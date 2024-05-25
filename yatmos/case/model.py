@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, Integer, ForeignKey, Enum
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.orderinglist import ordering_list
 
 from yatmos.database import Base
@@ -15,18 +15,21 @@ class Case(Base):
     desc = Column(String)
     suite_id = Column(Integer, ForeignKey("suites.id"))
 
-    suite = relationship("Suite", backref="cases")
+    suite = relationship("Suite", backref=backref("cases", lazy="dynamic"))
     steps = relationship(Step, order_by="Step.position", collection_class=ordering_list("position"))
     results = relationship("CaseResult", back_populates="case")
 
-    def make_result(self, db, run_id, suite_id):
+    def make_result(self, db, run_id, suite_id, make_steps=True):
         res = CaseResult(run_id=run_id, suite_id=suite_id, case_id=self.id)
         db.add(res)
         db.commit()
         db.refresh(res)
 
-        for step in self.steps:
-            step.make_result(db=db, case_id=res.id)
+        if make_steps:
+            for step in self.steps:
+                step.make_result(db=db, case_id=res.id)
+
+        return res
 
 
 class CaseResult(Base):

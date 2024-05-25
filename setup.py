@@ -14,6 +14,13 @@ setuptools.setup(
         "fastapi",
         "uvicorn[standard]",
         "sqlalchemy",
-        "psycopg2"
+        "psycopg2",
+        "junitparser"
     ],
+    entry_points={
+        "console_scripts": [
+            # ржунит, read junit
+            'rjunit = yatmos.plugins.junit:main'
+        ]
+    }
 )

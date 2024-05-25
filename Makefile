@@ -14,7 +14,10 @@ seed:
 	ENVIRONMENT=testing $(VENV)/python yatmos/seed.py
 
 test: venv
-	ENVIRONMENT=testing $(VENV)/pytest --cov=$(PROJECT_NAME) --cov-report=html --cov-report=term tests/
+	ENVIRONMENT=testing $(VENV)/pytest \
+		--cov=$(PROJECT_NAME) --cov-report=html --cov-report=term \
+		--junit-xml=report.xml \
+		tests/
 
 image:
 	docker build -t $(PROJECT_NAME) .

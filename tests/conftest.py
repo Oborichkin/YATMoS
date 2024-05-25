@@ -40,9 +40,9 @@ step_c = {"title": "Step C", "desc": "Third step"}
 @pytest.fixture(scope="function", autouse=True)
 def empty_db():
     db = SessionLocal()
+    Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
     yield db
-    Base.metadata.drop_all(bind=engine)
     db.close()
 
 

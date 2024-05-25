@@ -19,6 +19,13 @@ def create_project(db: Session, project: ProjectCreate):
     return new_project
 
 
+def get_project_by_name(db: Session, project_title: str, or_create: False):
+    if project := db.query(Project).filter(Project.title == project_title).first():
+        return project
+    elif or_create:
+        return create_project(db, ProjectCreate(title=project_title))
+
+
 def delete_project(db: Session, project_id: int):
     project = db.query(Project).filter(Project.id == project_id)
     project.delete()
