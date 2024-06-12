@@ -22,3 +22,4 @@
 # Other
 
 - [Обновление сюит и тестов, отображение информации о Run'е](docs/updates.md)
+- [Разделение Case и CaseResult от Implementation и Report](docs/separate_implementation.md)
